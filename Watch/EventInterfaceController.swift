@@ -15,7 +15,9 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
     
     var events = [String]()
     var date = [NSDate]()
-    var userDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")
+    let userDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")
+    
+    // MARK: Outlets
 
     @IBOutlet var eventsTable: WKInterfaceTable!
     @IBOutlet var noDataLabel: WKInterfaceLabel!
@@ -48,7 +50,7 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
             }
         }
         
-        if self.events.count > 0 {
+        if events.count > 0 {
             
             self.noDataLabel.setHidden(true)
             

@@ -12,6 +12,8 @@ import Foundation
 
 class EventDetailsInterfaceController: WKInterfaceController {
     
+    // MARK: Outlets
+    
     @IBOutlet var eventTitleLabel: WKInterfaceLabel!
     @IBOutlet weak var counterDaysLabel: WKInterfaceLabel!
     @IBOutlet weak var counterHoursLabel: WKInterfaceLabel!

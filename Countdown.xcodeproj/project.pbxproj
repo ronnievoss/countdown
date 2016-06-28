@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0885F31D202E3D000F3366 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
 		2E14226C1CEA99F500F4BECF /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E14226B1CEA99F500F4BECF /* NotificationCenter.framework */; };
 		2E14226F1CEA99F500F4BECF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E14226E1CEA99F500F4BECF /* TodayViewController.swift */; };
 		2E1422721CEA99F500F4BECF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E1422701CEA99F500F4BECF /* MainInterface.storyboard */; };
 		2E1422761CEA99F500F4BECF /* Countdown Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E1422691CEA99F400F4BECF /* Countdown Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2E65B9B11D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
+		2E65B9B21D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
 		2E6656471CE01ADA00E2417F /* GlanceInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6656461CE01ADA00E2417F /* GlanceInterfaceController.swift */; };
 		2E8FA7531CD98BBC00A11650 /* EventRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FA7521CD98BBC00A11650 /* EventRowController.swift */; };
 		2E8FA7551CD9992800A11650 /* EventDetailsInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FA7541CD9992800A11650 /* EventDetailsInterfaceController.swift */; };
@@ -92,6 +95,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E0885F21D202E3D000F3366 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		2E1422691CEA99F400F4BECF /* Countdown Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Countdown Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E14226B1CEA99F500F4BECF /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		2E14226E1CEA99F500F4BECF /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 				2E14227D1CEAB54900F4BECF /* Countdown.entitlements */,
 				2EFAF1B11CC1687500EB8715 /* AppDelegate.swift */,
 				2EFAF1B31CC1687500EB8715 /* ViewController.swift */,
+				2E0885F21D202E3D000F3366 /* Event.swift */,
 				2EFAF1B51CC1687500EB8715 /* Main.storyboard */,
 				2E916E861CFBDE3B00FDD9CF /* ReminderViewController.swift */,
 				2ECB66901CD3B96400FC2457 /* AddEventViewController.swift */,
@@ -407,6 +412,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E65B9B21D22BA070020AF6B /* Event.swift in Sources */,
 				2E14226F1CEA99F500F4BECF /* TodayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +425,7 @@
 				2E8FA7551CD9992800A11650 /* EventDetailsInterfaceController.swift in Sources */,
 				2E6656471CE01ADA00E2417F /* GlanceInterfaceController.swift in Sources */,
 				2E923EBB1CD84CAA00544527 /* ExtensionDelegate.swift in Sources */,
+				2E65B9B11D22BA070020AF6B /* Event.swift in Sources */,
 				2E8FA7531CD98BBC00A11650 /* EventRowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +438,7 @@
 				2ECB66911CD3B96400FC2457 /* AddEventViewController.swift in Sources */,
 				2E916E871CFBDE3B00FDD9CF /* ReminderViewController.swift in Sources */,
 				2EFAF1B21CC1687500EB8715 /* AppDelegate.swift in Sources */,
+				2E0885F31D202E3D000F3366 /* Event.swift in Sources */,
 				2ECB668F1CD19F2400FC2457 /* EventsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

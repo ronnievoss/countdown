@@ -14,14 +14,11 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      var session: WCSession?
      var eventStore: EKEventStore!
-     var events = [String]()
-     var date = [NSDate]()
      var calendarEvent: String?
      var calendarStartDate: NSDate?
      var calendarEndDate: NSDate?
      var allDayEvent: Bool?
-
-     var userDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")
+     var event = Event()
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -31,9 +28,6 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
                session?.delegate = self
                session?.activateSession()
           }
-          
-          events = userDefaults!.objectForKey("events") as? [String] ?? [String]()
-          date = userDefaults!.objectForKey("date") as? [NSDate] ?? [NSDate]()
           
           sendApplicationContext()
           tableView.reloadData()
@@ -52,10 +46,9 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      func sendApplicationContext() {
           if let validSession = session {
-               let iPhoneAppContext = ["events": events, "date": date]
+               let iPhoneAppContext = ["events": event.events, "date": event.date]
                do {
                     try validSession.updateApplicationContext(iPhoneAppContext as! [String : AnyObject])
-                    print(events)
                } catch {
                     print("Something went wrong")
                }
@@ -66,7 +59,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
           
-          if events.count > 0 {
+          if event.events.count > 0 {
                
                self.tableView.backgroundView = nil
                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
@@ -85,7 +78,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      }
      
      override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-          return events.count
+          return event.events.count
      }
      
      
@@ -95,8 +88,8 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
           let dateFormatter = NSDateFormatter()
           dateFormatter.dateStyle = .MediumStyle
           dateFormatter.timeStyle = .ShortStyle
-          let selectedDate = dateFormatter.stringFromDate(date[indexPath.row])
-          let timeLeft = date[indexPath.row].timeIntervalSinceNow
+          let selectedDate = dateFormatter.stringFromDate(event.date[indexPath.row])
+          let timeLeft = event.date[indexPath.row].timeIntervalSinceNow
           
           if timeLeft <= 0 {
                cell.textLabel?.textColor = UIColor.redColor()
@@ -106,14 +99,14 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
                cell.detailTextLabel?.textColor = UIColor.blackColor()
           }
           
-          cell.textLabel?.text = events[indexPath.row]
+          cell.textLabel?.text = event.events[indexPath.row]
           cell.detailTextLabel?.text = selectedDate
           
           return cell
      }
      
      override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-          userDefaults!.setInteger(indexPath.row, forKey: "index")
+          event.userDefaults!.setInteger(indexPath.row, forKey: "index")
      }
      
      
@@ -125,14 +118,14 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
           if editingStyle == .Delete {
                // Delete the row from the data source
-               cancelLocalNotification(String(date[indexPath.row]))
-               events.removeAtIndex(indexPath.row)
-               date.removeAtIndex(indexPath.row)
-               userDefaults!.setObject(events, forKey: "events")
-               userDefaults!.setObject(date, forKey: "date")
-               let index = userDefaults?.integerForKey("index")
+               cancelLocalNotification(String(event.date[indexPath.row]))
+               event.events.removeAtIndex(indexPath.row)
+               event.date.removeAtIndex(indexPath.row)
+               event.userDefaults!.setObject(event.events, forKey: "events")
+               event.userDefaults!.setObject(event.date, forKey: "date")
+               let index = event.userDefaults?.integerForKey("index")
                if index == indexPath.row {
-                    userDefaults?.setInteger(0, forKey: "index")
+                    event.userDefaults?.setInteger(0, forKey: "index")
                }
                
                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
@@ -145,10 +138,10 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
           if segue.identifier == "ShowDetail" {
                let selectedCell = sender as? UITableViewCell, selectedRowIndex = tableView.indexPathForCell(selectedCell!)!.row
-               let event = events[selectedRowIndex]
-               let eventDate = date[selectedRowIndex]
+               let eventName = event.events[selectedRowIndex]
+               let eventDate = event.date[selectedRowIndex]
                let detailViewController = segue.destinationViewController as! ViewController
-               detailViewController.eventTitle = event
+               detailViewController.eventTitle = eventName
                detailViewController.eventDate = eventDate
           }
      }
@@ -159,16 +152,16 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      @IBAction func saveEvent(segue:UIStoryboardSegue) {
           if let addEventViewController = segue.sourceViewController as? AddEventViewController {
-               if let event = addEventViewController.eventTextField.text {
-                    events.append(event)
-                    calendarEvent = event
-                    userDefaults?.setObject(events, forKey: "events")
+               if let eventName = addEventViewController.eventTextField.text {
+                    event.events.append(eventName)
+                    calendarEvent = eventName
+                    event.userDefaults?.setObject(event.events, forKey: "events")
                }
                
                if let eventDate = addEventViewController.startDate {
-                    date.append(eventDate)
+                    event.date.append(eventDate)
                     calendarStartDate = eventDate
-                    userDefaults?.setObject(date, forKey: "date")
+                    event.userDefaults?.setObject(event.date, forKey: "date")
                     self.localNotification(eventDate)
                }
                
@@ -263,7 +256,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
           let dict:NSDictionary = ["ID": String(eventDate)]
           notification.fireDate = eventDate
           notification.userInfo = dict as! [String: AnyObject]
-          notification.alertBody = events.last
+          notification.alertBody = event.events.last
           notification.alertAction = "Dismiss"
           notification.soundName = UILocalNotificationDefaultSoundName
           UIApplication.sharedApplication().scheduleLocalNotification(notification)
