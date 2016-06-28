@@ -12,11 +12,11 @@ import NotificationCenter
 class TodayViewController: UIViewController, NCWidgetProviding {
     
     var events = [String]()
-    var date = [NSDate]()
-    var timer = NSTimer()
+    var date = [Date]()
+    var timer = Timer()
     var eventTitle:String!
-    var eventDate:NSDate!
-    var timeLeft:NSTimeInterval!
+    var eventDate:Date!
+    var timeLeft:TimeInterval!
     var event = Event()
     
     // MARK: Outlets
@@ -34,17 +34,17 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        events = event.userDefaults!.objectForKey("events") as? [String] ?? [String]()
-        date = event.userDefaults!.objectForKey("date") as? [NSDate] ?? [NSDate]()
+        events = event.userDefaults!.object(forKey: "events") as? [String] ?? [String]()
+        date = event.userDefaults!.object(forKey: "date") as? [Date] ?? [Date]()
         
         if events.count > 0 {
             loadEvent()
         } else {
-            stackView.hidden = true
-            noEventsLabel.hidden = false
+            stackView.isHidden = true
+            noEventsLabel.isHidden = false
         }
         
     }
@@ -56,18 +56,18 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func loadEvent() {
-        stackView.hidden = false
-        noEventsLabel.hidden = true
+        stackView.isHidden = false
+        noEventsLabel.isHidden = true
         
-        let index: Int? = event.userDefaults!.integerForKey("index")
+        let index: Int? = event.userDefaults!.integer(forKey: "index")
         
         if let arrayIndex = index {
             eventTitle = events[arrayIndex]
             eventDate = date[arrayIndex]
             eventLabel.text = eventTitle
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .MediumStyle
-            dateFormatter.timeStyle = .ShortStyle
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .mediumStyle
+            dateFormatter.timeStyle = .shortStyle
         }
         
         updateLabels()
@@ -77,9 +77,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     func updateLabels() {
         timeLeft = eventDate.timeIntervalSinceNow
         let day = Int((timeLeft/86400))
-        let hour = Int((timeLeft/3600.0)%24)
-        let minute = Int((timeLeft/60.0)%60)
-        let second = Int((timeLeft)%60)
+        let hour = Int((timeLeft/3600.0).truncatingRemainder(dividingBy: 24))
+        let minute = Int((timeLeft/60.0).truncatingRemainder(dividingBy: 60))
+        let second = Int((timeLeft).truncatingRemainder(dividingBy: 60))
         counterDaysLabel.text = String(day)
         counterHoursLabel.text = String(hour)
         counterMinutesLabel.text = String(minute)
@@ -93,7 +93,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             counterMinutesLabel.text = "0"
             counterSecondsLabel.text = "0"
         }
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector: #selector(TodayViewController.updateCounter), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(TodayViewController.updateCounter), userInfo: nil, repeats: true)
     }
     
     func updateCounter() {
@@ -105,20 +105,19 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
     
-    func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
+    func widgetPerformUpdate(completionHandler: ((NCUpdateResult) -> Void)) {
         
         if events.count > 0 {
             loadEvent()
-            completionHandler(NCUpdateResult.NewData)
+            completionHandler(NCUpdateResult.newData)
         } else {
-            completionHandler(NCUpdateResult.NoData)        }
+            completionHandler(NCUpdateResult.noData)        }
         
         
     }
     
-    func widgetMarginInsetsForProposedMarginInsets
-        (defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
+    func widgetMarginInsets
+        (forProposedMarginInsets defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
         return UIEdgeInsetsZero
     }
-    
 }

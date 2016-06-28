@@ -14,7 +14,6 @@
 		2E1422761CEA99F500F4BECF /* Countdown Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E1422691CEA99F400F4BECF /* Countdown Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2E65B9B11D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
 		2E65B9B21D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
-		2E6656471CE01ADA00E2417F /* GlanceInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6656461CE01ADA00E2417F /* GlanceInterfaceController.swift */; };
 		2E8FA7531CD98BBC00A11650 /* EventRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FA7521CD98BBC00A11650 /* EventRowController.swift */; };
 		2E8FA7551CD9992800A11650 /* EventDetailsInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FA7541CD9992800A11650 /* EventDetailsInterfaceController.swift */; };
 		2E916E871CFBDE3B00FDD9CF /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E916E861CFBDE3B00FDD9CF /* ReminderViewController.swift */; };
@@ -103,7 +102,6 @@
 		2E1422731CEA99F500F4BECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E14227D1CEAB54900F4BECF /* Countdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Countdown.entitlements; sourceTree = "<group>"; };
 		2E14227E1CEAB58B00F4BECF /* Countdown Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Countdown Widget.entitlements"; sourceTree = "<group>"; };
-		2E6656461CE01ADA00E2417F /* GlanceInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlanceInterfaceController.swift; sourceTree = "<group>"; };
 		2E8FA7521CD98BBC00A11650 /* EventRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRowController.swift; sourceTree = "<group>"; };
 		2E8FA7541CD9992800A11650 /* EventDetailsInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsInterfaceController.swift; sourceTree = "<group>"; };
 		2E916E861CFBDE3B00FDD9CF /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				2E923EA91CD84CA900544527 /* Interface.storyboard */,
-				2E6656461CE01ADA00E2417F /* GlanceInterfaceController.swift */,
 				2E923EAC1CD84CA900544527 /* Assets.xcassets */,
 				2E923EAE1CD84CA900544527 /* Info.plist */,
 			);
@@ -319,12 +316,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Ronnie Voss";
 				TargetAttributes = {
 					2E1422681CEA99F400F4BECF = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = TR69BU35V2;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -333,13 +331,20 @@
 					};
 					2E923EA61CD84CA900544527 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = TR69BU35V2;
+						DevelopmentTeamName = "Ronnie Voss";
 					};
 					2E923EB21CD84CAA00544527 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = TR69BU35V2;
+						DevelopmentTeamName = "Ronnie Voss";
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 					2EFAF1AD1CC1687400EB8715 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = TR69BU35V2;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -423,7 +428,6 @@
 			files = (
 				2E923ECC1CD9871A00544527 /* EventInterfaceController.swift in Sources */,
 				2E8FA7551CD9992800A11650 /* EventDetailsInterfaceController.swift in Sources */,
-				2E6656471CE01ADA00E2417F /* GlanceInterfaceController.swift in Sources */,
 				2E923EBB1CD84CAA00544527 /* ExtensionDelegate.swift in Sources */,
 				2E65B9B11D22BA070020AF6B /* Event.swift in Sources */,
 				2E8FA7531CD98BBC00A11650 /* EventRowController.swift in Sources */,
@@ -508,6 +512,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rvoss.Countdown.Countdown-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -520,14 +525,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rvoss.Countdown.Countdown-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		2E923EC21CD84CAA00544527 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown.watchkitapp;
@@ -542,8 +549,8 @@
 		2E923EC31CD84CAA00544527 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				IBSC_MODULE = Watch_Extension;
 				INFOPLIST_FILE = Watch/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown.watchkitapp;
@@ -558,12 +565,14 @@
 		2E923EC41CD84CAA00544527 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
@@ -572,12 +581,15 @@
 		2E923EC51CD84CAA00544527 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Watch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.2;
 			};
@@ -669,26 +681,29 @@
 		2EFAF1C11CC1687500EB8715 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Countdown/Countdown.entitlements;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Countdown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		2EFAF1C21CC1687500EB8715 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Countdown/Countdown.entitlements;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Countdown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

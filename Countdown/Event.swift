@@ -12,11 +12,11 @@ import UIKit
 class Event {
     
     var events: [String]
-    var date: [NSDate]
-    let userDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")
+    var date: [Date]
+    let userDefaults = UserDefaults(suiteName: "group.com.rvoss.Countdown")
     
     init() {
-        self.events = userDefaults!.objectForKey("events") as? [String] ?? [String]()
-        self.date = userDefaults!.objectForKey("date") as? [NSDate] ?? [NSDate]()
+        self.events = userDefaults!.object(forKey: "events") as? [String] ?? [String]()
+        self.date = userDefaults!.object(forKey: "date") as? [Date] ?? [Date]()
     }
 }

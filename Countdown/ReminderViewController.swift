@@ -15,7 +15,7 @@ class ReminderViewController: UITableViewController {
     var selectedReminder: String? {
         didSet {
             if let reminder = selectedReminder {
-                selectedReminderIndex = reminders.indexOf(reminder)!
+                selectedReminderIndex = reminders.index(of: reminder)!
             }
         }
     }
@@ -34,51 +34,51 @@ class ReminderViewController: UITableViewController {
     // MARK: - Table view data source
 
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reminders.count
     }
 
  
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = reminders[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = reminders[(indexPath as NSIndexPath).row]
 
-        if indexPath.row == selectedReminderIndex {
-            cell.accessoryType = .Checkmark
+        if (indexPath as NSIndexPath).row == selectedReminderIndex {
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = .None
+            cell.accessoryType = .none
         }
         return cell
     }
     
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
 
         if let index = selectedReminderIndex {
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: indexPath.section))
-            cell?.accessoryType = .None
+            let cell = tableView.cellForRow(at: IndexPath(row: index, section: (indexPath as NSIndexPath).section))
+            cell?.accessoryType = .none
         }
         
-        selectedReminder = reminders[indexPath.row]
+        selectedReminder = reminders[(indexPath as NSIndexPath).row]
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell?.accessoryType = .Checkmark
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.accessoryType = .checkmark
         
     }
     
     // MARK: - Navigation
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SaveReminder" {
             if let cell = sender as? UITableViewCell {
-                let indexPath = tableView.indexPathForCell(cell)
-                if let index = indexPath?.row {
+                let indexPath = tableView.indexPath(for: cell)
+                if let index = (indexPath as NSIndexPath?)?.row {
                     selectedReminder = reminders[index]
                 }
             }

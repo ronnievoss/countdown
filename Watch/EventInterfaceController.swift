@@ -13,62 +13,47 @@ import WatchConnectivity
 
 class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
     
+    var session: WCSession?
     var events = [String]()
-    var date = [NSDate]()
-    let userDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")
+    var date = [Date]()
+    var event = Event()
     
     // MARK: Outlets
 
     @IBOutlet var eventsTable: WKInterfaceTable!
     @IBOutlet var noDataLabel: WKInterfaceLabel!
     
-    let session = WCSession.defaultSession()
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: AnyObject?) {
+        super.awake(withContext: context)
         
-        session.delegate = self
-        session.activateSession()
-        processApplicationContext()
-        
-    }
-    
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
-        let eventTitle = events[rowIndex]
-        let eventDate = date[rowIndex]
-        self.pushControllerWithName("Event", context: ["eventName": eventTitle, "eventDate": eventDate])
-        
-        userDefaults!.setObject(rowIndex, forKey: "index")
-    }
-    
-    func processApplicationContext() {
-        if let iPhoneContext = session.receivedApplicationContext as [String: AnyObject]? {
-            if iPhoneContext.isEmpty == false {
-                events = iPhoneContext["events"]! as! [String]
-                date = iPhoneContext["date"]! as! [NSDate]
-                eventsTable.setNumberOfRows(events.count, withRowType: "EventRow")
-            }
+        if WCSession.isSupported() {
+            session = WCSession.default()
+            session?.delegate = self
+            session?.activate()
         }
+    }
+    
+    func loadEvents() {
         
         if events.count > 0 {
             
             self.noDataLabel.setHidden(true)
             
             for index in 0..<eventsTable.numberOfRows {
-                if let controller = eventsTable.rowControllerAtIndex(index) as? EventRowController {
+                if let controller = eventsTable.rowController(at: index) as? EventRowController {
                     controller.eventLabel.setText(events[index])
                     
                     let timeLeft = date[index].timeIntervalSinceNow
                     if timeLeft <= 0 {
-                        controller.separator.setColor(UIColor.redColor())
+                        controller.separator.setColor(UIColor.red())
                     } else {
-                        controller.separator.setColor(UIColor.greenColor())
+                        controller.separator.setColor(UIColor.green())
                     }
-                    let dateFormatter = NSDateFormatter()
-                    dateFormatter.dateStyle = .MediumStyle
-                    dateFormatter.timeStyle = .ShortStyle
-                    let selectedDate = dateFormatter.stringFromDate(date[index])
-                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .mediumStyle
+                    dateFormatter.timeStyle = .shortStyle
+                    let selectedDate = dateFormatter.string(from: date[index])
                     controller.dateLabel.setText(selectedDate)
                 }
             }
@@ -77,12 +62,43 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
         }
     }
     
-    func session(session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
-        dispatch_async(dispatch_get_main_queue()) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
+        let eventTitle = events[rowIndex]
+        let eventDate = date[rowIndex]
+        self.pushController(withName: "Event", context: ["eventName": eventTitle, "eventDate": eventDate])
+        event.userDefaults!.set(rowIndex, forKey: "index")
+    }
+    
+    func processApplicationContext() {
+        if let iPhoneContext = session!.receivedApplicationContext as [String: AnyObject]? {
+            if iPhoneContext.isEmpty == false {
+                events = iPhoneContext["events"]! as! [String]
+                date = iPhoneContext["date"]! as! [Date]
+                eventsTable.setNumberOfRows(events.count, withRowType: "EventRow")
+            }
+        }
+        
+        self.loadEvents()
+    }
+    
+    // MARK: WCSessionDelegate
+    
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
+        if let error = error {
+            print("session activation failed with error: \(error.localizedDescription)")
+            return
+        }
+        
+        print("session activated with state: \(activationState.rawValue)")
+        processApplicationContext()
+    }
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+        DispatchQueue.main.async {
             self.processApplicationContext()
         }
     }
-
+    
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
@@ -93,5 +109,4 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
-
 }

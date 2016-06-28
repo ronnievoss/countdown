@@ -11,9 +11,9 @@ import UIKit
 class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     var event:String?
-    var startDate:NSDate?
-    var endDate:NSDate?
-    var interval: NSTimeInterval?
+    var startDate:Date?
+    var endDate:Date?
+    var interval: TimeInterval?
     var datePickerHidden = true
     var startDatePickerHidden = true
     var endDatePickerHidden = true
@@ -51,25 +51,25 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     // MARK: Actions
     
-    @IBAction func valueChanged(sender: UIDatePicker!) {
-        let dateFormatter = NSDateFormatter()
-        let endDateFormatter = NSDateFormatter()
+    @IBAction func valueChanged(_ sender: UIDatePicker!) {
+        let dateFormatter = DateFormatter()
+        let endDateFormatter = DateFormatter()
         
         // Add 1 hour to end date
         self.interval = 3600
         if sender == startDatePicker {
-            endDatePicker.setDate(startDatePicker.date.dateByAddingTimeInterval(interval!), animated: false)
+            endDatePicker.setDate(startDatePicker.date.addingTimeInterval(interval!), animated: false)
         }
         
         startDate = startDatePicker.date
         endDate = endDatePicker.date
 
-        if addToCalendarSwitch.on == true {
+        if addToCalendarSwitch.isOn == true {
             dateLabel.text = "Starts"
         }
         
         //Check if startDatePicker and endDatePicker is same day
-        let sameDay = NSCalendar.currentCalendar().isDate(startDate!, inSameDayAsDate: endDate!)
+        let sameDay = Calendar.current().isDate(startDate!, inSameDayAs: endDate!)
         
         if sameDay == true {
             endDateFormatter.dateFormat = "h:mm a"
@@ -77,7 +77,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
             endDateFormatter.dateFormat = "MMM d, yyyy       h:mm a"
         }
         
-        if allDayEventSwitch.on {
+        if allDayEventSwitch.isOn {
             dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             endDateFormatter.dateFormat = "EEEE, MMM d, yyyy"
             if sender == startDatePicker {
@@ -89,40 +89,40 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         
         // Check if end date is earlier than start date
         let compareDate = startDate!.compare(endDate!)
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: endDateFormatter.stringFromDate(endDate!))
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: endDateFormatter.string(from: endDate!))
         attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributeString.length))
         
-        startDateLabel.text = dateFormatter.stringFromDate(startDate!)
-        if compareDate == .OrderedDescending {
+        startDateLabel.text = dateFormatter.string(from: startDate!)
+        if compareDate == .orderedDescending {
             endDateLabel.attributedText = attributeString
         } else {
-            endDateLabel.text = endDateFormatter.stringFromDate(endDate!)
+            endDateLabel.text = endDateFormatter.string(from: endDate!)
         }
         
     }
     
-    @IBAction func calendarSwitchValueChanged(sender: UISwitch) {
-        UIView.animateWithDuration(0.2, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    @IBAction func calendarSwitchValueChanged(_ sender: UISwitch) {
+        UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.eventTextField.resignFirstResponder()
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
             },completion: nil)
-        if sender.on {self.dateLabel.text = "Starts"} else {self.dateLabel.text = "Date"}
+        if sender.isOn {self.dateLabel.text = "Starts"} else {self.dateLabel.text = "Date"}
     }
     
-    @IBAction func allDayEventSwitchValueChanged(sender: UISwitch) {
-        if allDayEventSwitch.on {
-            startDatePicker.datePickerMode = .Date
-            endDatePicker.datePickerMode = .Date
+    @IBAction func allDayEventSwitchValueChanged(_ sender: UISwitch) {
+        if allDayEventSwitch.isOn {
+            startDatePicker.datePickerMode = .date
+            endDatePicker.datePickerMode = .date
             valueChanged(startDatePicker)
         } else {
-            startDatePicker.datePickerMode = .DateAndTime
-            endDatePicker.datePickerMode = .DateAndTime
+            startDatePicker.datePickerMode = .dateAndTime
+            endDatePicker.datePickerMode = .dateAndTime
             valueChanged(startDatePicker)
         }
     }
     
-    @IBAction func unwindWithSelectedReminder(segue: UIStoryboardSegue) {
+    @IBAction func unwindWithSelectedReminder(_ segue: UIStoryboardSegue) {
         if let reminderViewController = segue.sourceViewController as? ReminderViewController, selectedReminder = reminderViewController.selectedReminder {
              reminder = selectedReminder
         }
@@ -130,32 +130,32 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     // MARK: - Table view data source
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-            UIView.animateWithDuration(0.2, delay: 0.1, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
                 cell.selectedBackgroundView?.alpha = CGFloat(0)
                 },completion: nil)
         }
-        if indexPath.section == 1 && indexPath.row == 2 {
+        if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 2 {
             startDatePickerHidden = !startDatePickerHidden
             if !endDatePickerHidden {
                 endDatePickerHidden = true
             }
-        } else if indexPath.section == 1 && indexPath.row == 4 {
+        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 4 {
             endDatePickerHidden = !endDatePickerHidden
             if !startDatePickerHidden {
                 startDatePickerHidden = true
             }
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            if addToCalendarSwitch.on {
+        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 0 {
+            if addToCalendarSwitch.isOn {
                 addToCalendarSwitch.setOn(false, animated: true)
                 calendarSwitchValueChanged(addToCalendarSwitch)
             } else {
                 addToCalendarSwitch.setOn(true, animated: true)
                 calendarSwitchValueChanged(addToCalendarSwitch)
             }
-        } else if indexPath.section == 1 && indexPath.row == 1 {
-            if allDayEventSwitch.on {
+        } else if (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 1 {
+            if allDayEventSwitch.isOn {
                 allDayEventSwitch.setOn(false, animated: true)
             } else {
                 allDayEventSwitch.setOn(true, animated: true)
@@ -165,34 +165,34 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         toggleDatepicker()
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if !addToCalendarSwitch.on && indexPath.section == 1 && indexPath.row == 1 {return 0}
-        if !addToCalendarSwitch.on && indexPath.section == 1 && indexPath.row == 4 {return 0}
-        if !addToCalendarSwitch.on && indexPath.section == 1 && indexPath.row == 6 {return 0}
-        if startDatePickerHidden && indexPath.section == 1 && indexPath.row == 3 {
+        if !addToCalendarSwitch.isOn && (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 1 {return 0}
+        if !addToCalendarSwitch.isOn && (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 4 {return 0}
+        if !addToCalendarSwitch.isOn && (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 6 {return 0}
+        if startDatePickerHidden && (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 3 {
             return 0
-        } else if endDatePickerHidden && indexPath.section == 1 && indexPath.row == 5 {
+        } else if endDatePickerHidden && (indexPath as NSIndexPath).section == 1 && (indexPath as NSIndexPath).row == 5 {
             return 0
         } else {
-            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            return super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
 
     func toggleDatepicker() {
 
         if !self.startDatePickerHidden {
-            self.startDateLabel.textColor = UIColor.redColor()
+            self.startDateLabel.textColor = UIColor.red()
             self.eventTextField.resignFirstResponder()
         } else {
-            self.startDateLabel.textColor = UIColor.blackColor()
+            self.startDateLabel.textColor = UIColor.black()
         }
         
         if !self.endDatePickerHidden {
-            self.endDateLabel.textColor = UIColor.redColor()
+            self.endDateLabel.textColor = UIColor.red()
             self.eventTextField.resignFirstResponder()
         } else {
-            self.endDateLabel.textColor = UIColor.blackColor()
+            self.endDateLabel.textColor = UIColor.black()
         }
         
         self.tableView.beginUpdates()
@@ -202,22 +202,22 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        saveButton.enabled = false
-        textField.addTarget(self, action: #selector(AddEventViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        saveButton.isEnabled = false
+        textField.addTarget(self, action: #selector(AddEventViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
     }
     
     func checkValidEventName() {
         let text = eventTextField.text ?? ""
-        saveButton.enabled = !text.isEmpty
+        saveButton.isEnabled = !text.isEmpty
     }
     
-    func textFieldDidChange(textField: UITextField) {
+    func textFieldDidChange(_ textField: UITextField) {
         checkValidEventName()
     }
     
@@ -228,7 +228,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     // MARK: Navigation
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SaveEvent" {
             event = eventTextField.text
             startDate = startDatePicker.date

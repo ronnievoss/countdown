@@ -20,17 +20,17 @@ class EventDetailsInterfaceController: WKInterfaceController {
     @IBOutlet weak var counterMinutesLabel: WKInterfaceLabel!
     @IBOutlet weak var counterSecondsLabel: WKInterfaceLabel!
     
-    var timer = NSTimer()
-    var timeLeft:NSTimeInterval!
+    var timer = Timer()
+    var timeLeft:TimeInterval!
     var eventTitle:String!
-    var eventDate:NSDate!
+    var eventDate:Date!
 
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: AnyObject?) {
+        super.awake(withContext: context)
         
         if let event = context as? [String: AnyObject]{
             eventTitle = event["eventName"]! as? String
-            eventDate = event["eventDate"]! as? NSDate
+            eventDate = event["eventDate"]! as? Date
             eventTitleLabel.setText(eventTitle)
         }
         updateLabels()
@@ -39,26 +39,14 @@ class EventDetailsInterfaceController: WKInterfaceController {
     
     func updateLabels() {
         timeLeft = eventDate.timeIntervalSinceNow
-        if timeLeft <= 0 {
-            counterDaysLabel.setText("0")
-            counterHoursLabel.setText("0")
-            counterMinutesLabel.setText("0")
-            counterSecondsLabel.setText("0")
-            timer.invalidate()
-            let alert = WKAlertAction(title: "OK", style: WKAlertActionStyle.Default, handler: {
-                () -> Void in
-            })
-            self.presentAlertControllerWithTitle("Countdown Completed", message: eventTitle, preferredStyle: WKAlertControllerStyle.Alert, actions: [alert])
-        } else {
-            let day = Int((timeLeft/86400))
-            let hour = Int((timeLeft/3600.0)%24)
-            let minute = Int((timeLeft/60.0)%60)
-            let second = Int((timeLeft)%60)
-            counterDaysLabel.setText(String(day))
-            counterHoursLabel.setText(String(hour))
-            counterMinutesLabel.setText(String(minute))
-            counterSecondsLabel.setText(String(second))
-        }
+        let day = Int((timeLeft/86400))
+        let hour = Int((timeLeft/3600.0).truncatingRemainder(dividingBy: 24))
+        let minute = Int((timeLeft/60.0).truncatingRemainder(dividingBy: 60))
+        let second = Int((timeLeft).truncatingRemainder(dividingBy: 60))
+        counterDaysLabel.setText(String(day))
+        counterHoursLabel.setText(String(hour))
+        counterMinutesLabel.setText(String(minute))
+        counterSecondsLabel.setText(String(second))
     }
     
     func startCounter() {
@@ -68,12 +56,12 @@ class EventDetailsInterfaceController: WKInterfaceController {
             counterMinutesLabel.setText("0")
             counterSecondsLabel.setText("0")
             timer.invalidate()
-            let alert = WKAlertAction(title: "OK", style: WKAlertActionStyle.Default, handler: {
+            let alert = WKAlertAction(title: "OK", style: WKAlertActionStyle.default, handler: {
                 () -> Void in
             })
-            self.presentAlertControllerWithTitle("Countdown Completed", message: eventTitle, preferredStyle: WKAlertControllerStyle.Alert, actions: [alert])
+            self.presentAlert(withTitle: "Countdown Completed", message: eventTitle, preferredStyle: WKAlertControllerStyle.alert, actions: [alert])
         } else {
-            timer = NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector: #selector(EventDetailsInterfaceController.updateLabels), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(EventDetailsInterfaceController.updateLabels), userInfo: nil, repeats: true)
         }
     }
     

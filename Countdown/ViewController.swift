@@ -19,9 +19,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var counterSecondsLabel: UILabel!
     
     var eventTitle:String!
-    var eventDate:NSDate!
-    var timeLeft:NSTimeInterval!
-    var timer = NSTimer()
+    var eventDate:Date!
+    var timeLeft:TimeInterval!
+    var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +34,9 @@ class ViewController: UIViewController {
     func updateLabels() {
         timeLeft = eventDate.timeIntervalSinceNow
         let day = Int((timeLeft/86400))
-        let hour = Int((timeLeft/3600.0)%24)
-        let minute = Int((timeLeft/60.0)%60)
-        let second = Int((timeLeft)%60)
+        let hour = Int((timeLeft/3600.0).truncatingRemainder(dividingBy: 24))
+        let minute = Int((timeLeft/60.0).truncatingRemainder(dividingBy: 60))
+        let second = Int((timeLeft).truncatingRemainder(dividingBy: 60))
         counterDaysLabel.text = String(day)
         counterHoursLabel.text = String(hour)
         counterMinutesLabel.text = String(minute)
@@ -50,15 +50,15 @@ class ViewController: UIViewController {
             counterMinutesLabel.text = "0"
             counterSecondsLabel.text = "0"
         }
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
     }
     
     @objc func updateCounter() {
         if timeLeft <= 0 {
             timer.invalidate()
-            let ac = UIAlertController(title: eventTitle, message: "Countdown Completed", preferredStyle: .Alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(ac, animated: true, completion: nil)
+            let ac = UIAlertController(title: eventTitle, message: "Countdown Completed", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(ac, animated: true, completion: nil)
         } else {
             updateLabels()
         }
