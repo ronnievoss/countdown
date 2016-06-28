@@ -17,7 +17,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     var eventTitle:String!
     var eventDate:NSDate!
     var timeLeft:NSTimeInterval!
-    var userDefaults: NSUserDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")!
+    var event = Event()
+    
+    // MARK: Outlets
     
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var counterDaysLabel: UILabel!
@@ -35,8 +37,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        events = userDefaults.objectForKey("events") as? [String] ?? [String]()
-        date = userDefaults.objectForKey("date") as? [NSDate] ?? [NSDate]()
+        events = event.userDefaults!.objectForKey("events") as? [String] ?? [String]()
+        date = event.userDefaults!.objectForKey("date") as? [NSDate] ?? [NSDate]()
         
         if events.count > 0 {
             loadEvent()
@@ -57,7 +59,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         stackView.hidden = false
         noEventsLabel.hidden = true
         
-        let index: Int? = userDefaults.integerForKey("index")
+        let index: Int? = event.userDefaults!.integerForKey("index")
         
         if let arrayIndex = index {
             eventTitle = events[arrayIndex]
@@ -104,11 +106,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
-        // Perform any setup necessary in order to update the view.
-
-        // If an error is encountered, use NCUpdateResult.Failed
-        // If there's no update required, use NCUpdateResult.NoData
-        // If there's an update, use NCUpdateResult.NewData
         
         if events.count > 0 {
             loadEvent()

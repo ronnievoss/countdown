@@ -15,7 +15,9 @@ class GlanceInterfaceController: WKInterfaceController, WCSessionDelegate {
     
     var events = [String]()
     var date = [NSDate]()
-    var userDefaults = NSUserDefaults(suiteName: "group.com.rvoss.Countdown")
+    var event = Event()
+    
+    // MARK: Outlets
     
     @IBOutlet var eventTitleLabel: WKInterfaceLabel!
     @IBOutlet var eventDateLabel: WKInterfaceLabel!
@@ -44,7 +46,7 @@ class GlanceInterfaceController: WKInterfaceController, WCSessionDelegate {
         super.willActivate()
         
         if events.count > 0 {
-            let index: Int? = userDefaults!.integerForKey("index")
+            let index: Int? = event.userDefaults!.integerForKey("index")
             
             if let arrayIndex = index {
                 eventTitle = events[arrayIndex]

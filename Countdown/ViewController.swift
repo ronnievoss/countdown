@@ -18,22 +18,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var counterMinutesLabel: UILabel!
     @IBOutlet weak var counterSecondsLabel: UILabel!
     
-    var timer = NSTimer()
     var eventTitle:String!
     var eventDate:NSDate!
     var timeLeft:NSTimeInterval!
+    var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        eventLabel.text = eventTitle
         updateLabels()
         startCounter()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        eventLabel.text = eventTitle
     }
     
     func updateLabels() {
@@ -55,18 +50,22 @@ class ViewController: UIViewController {
             counterMinutesLabel.text = "0"
             counterSecondsLabel.text = "0"
         }
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector: #selector(self.updateCounter), userInfo: nil, repeats: true)
     }
     
-    func updateCounter() {
-        
+    @objc func updateCounter() {
         if timeLeft <= 0 {
             timer.invalidate()
-            let alert = UIAlertController(title: eventTitle, message: "Countdown Completed", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let ac = UIAlertController(title: eventTitle, message: "Countdown Completed", preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(ac, animated: true, completion: nil)
         } else {
             updateLabels()
         }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 }
