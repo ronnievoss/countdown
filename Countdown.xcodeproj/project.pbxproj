@@ -14,6 +14,7 @@
 		2E1422761CEA99F500F4BECF /* Countdown Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E1422691CEA99F400F4BECF /* Countdown Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2E65B9B11D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
 		2E65B9B21D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
+		2E6C7EB31D23442F004554F1 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2E6C7EB21D23442F004554F1 /* .gitignore */; };
 		2E8FA7531CD98BBC00A11650 /* EventRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FA7521CD98BBC00A11650 /* EventRowController.swift */; };
 		2E8FA7551CD9992800A11650 /* EventDetailsInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FA7541CD9992800A11650 /* EventDetailsInterfaceController.swift */; };
 		2E916E871CFBDE3B00FDD9CF /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E916E861CFBDE3B00FDD9CF /* ReminderViewController.swift */; };
@@ -102,6 +103,7 @@
 		2E1422731CEA99F500F4BECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E14227D1CEAB54900F4BECF /* Countdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Countdown.entitlements; sourceTree = "<group>"; };
 		2E14227E1CEAB58B00F4BECF /* Countdown Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Countdown Widget.entitlements"; sourceTree = "<group>"; };
+		2E6C7EB21D23442F004554F1 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2E8FA7521CD98BBC00A11650 /* EventRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRowController.swift; sourceTree = "<group>"; };
 		2E8FA7541CD9992800A11650 /* EventDetailsInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsInterfaceController.swift; sourceTree = "<group>"; };
 		2E916E861CFBDE3B00FDD9CF /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		2EFAF1A51CC1687300EB8715 = {
 			isa = PBXGroup;
 			children = (
+				2E6C7EB21D23442F004554F1 /* .gitignore */,
 				2EFAF1B01CC1687500EB8715 /* Countdown */,
 				2E923EA81CD84CA900544527 /* Watch */,
 				2E923EB71CD84CAA00544527 /* Watch Extension */,
@@ -404,6 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E6C7EB31D23442F004554F1 /* .gitignore in Resources */,
 				2EFAF1BC1CC1687500EB8715 /* LaunchScreen.storyboard in Resources */,
 				2EFAF1B91CC1687500EB8715 /* Assets.xcassets in Resources */,
 				2EFAF1B71CC1687500EB8715 /* Main.storyboard in Resources */,
