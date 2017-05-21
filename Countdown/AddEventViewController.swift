@@ -42,6 +42,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         eventTextField.delegate = self
         eventTextField.becomeFirstResponder()
         valueChanged(startDatePicker)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -69,7 +70,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         }
         
         //Check if startDatePicker and endDatePicker is same day
-        let sameDay = Calendar.current().isDate(startDate!, inSameDayAs: endDate!)
+        let sameDay = Calendar.current.isDate(startDate!, inSameDayAs: endDate!)
         
         if sameDay == true {
             endDateFormatter.dateFormat = "h:mm a"
@@ -123,7 +124,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     }
     
     @IBAction func unwindWithSelectedReminder(_ segue: UIStoryboardSegue) {
-        if let reminderViewController = segue.sourceViewController as? ReminderViewController, selectedReminder = reminderViewController.selectedReminder {
+        if let reminderViewController = segue.source as? ReminderViewController, let selectedReminder = reminderViewController.selectedReminder {
              reminder = selectedReminder
         }
     }
@@ -182,17 +183,17 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     func toggleDatepicker() {
 
         if !self.startDatePickerHidden {
-            self.startDateLabel.textColor = UIColor.red()
+            self.startDateLabel.textColor = UIColor.red
             self.eventTextField.resignFirstResponder()
         } else {
-            self.startDateLabel.textColor = UIColor.black()
+            self.startDateLabel.textColor = UIColor.black
         }
         
         if !self.endDatePickerHidden {
-            self.endDateLabel.textColor = UIColor.red()
+            self.endDateLabel.textColor = UIColor.red
             self.eventTextField.resignFirstResponder()
         } else {
-            self.endDateLabel.textColor = UIColor.black()
+            self.endDateLabel.textColor = UIColor.black
         }
         
         self.tableView.beginUpdates()
@@ -228,7 +229,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     // MARK: Navigation
 
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SaveEvent" {
             event = eventTextField.text
             startDate = startDatePicker.date
@@ -239,7 +240,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         }
         
         if segue.identifier == "SetReminder" {
-            if let reminderViewController = segue.destinationViewController as? ReminderViewController {
+            if let reminderViewController = segue.destination as? ReminderViewController {
                 reminderViewController.selectedReminder = reminder
             }
         }

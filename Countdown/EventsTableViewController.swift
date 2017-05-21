@@ -9,6 +9,7 @@
 import UIKit
 import WatchConnectivity
 import EventKit
+import UserNotifications
 
 class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
@@ -19,6 +20,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      var calendarEndDate: Date?
      var allDayEvent: Bool?
      var event = Event()
+     let center = UNUserNotificationCenter.current()
      
      override func viewDidLoad() {
           super.viewDidLoad()
@@ -45,9 +47,9 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      func sendApplicationContext() {
           if let validSession = session {
-               let iPhoneAppContext = ["events": event.events, "date": event.date]
+               let iPhoneAppContext = ["events": event.events, "date": event.date] as [String : Any]
                do {
-                    try validSession.updateApplicationContext(iPhoneAppContext as! [String : AnyObject])
+                    try validSession.updateApplicationContext(iPhoneAppContext as [String : AnyObject])
                } catch {
                     print("Something went wrong")
                }
@@ -68,7 +70,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
                let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
                noDataLabel.font = UIFont.systemFont(ofSize: 50)
                noDataLabel.text = "No Events"
-               noDataLabel.textColor = UIColor.darkGray()
+               noDataLabel.textColor = UIColor.darkGray
                noDataLabel.textAlignment = NSTextAlignment.center
                self.tableView.backgroundView = noDataLabel
                self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
@@ -85,17 +87,17 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
           let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
           
           let dateFormatter = DateFormatter()
-          dateFormatter.dateStyle = .mediumStyle
-          dateFormatter.timeStyle = .shortStyle
+          dateFormatter.dateStyle = .medium
+          dateFormatter.timeStyle = .short
           let selectedDate = dateFormatter.string(from: event.date[(indexPath as NSIndexPath).row] as Date)
           let timeLeft = event.date[(indexPath as NSIndexPath).row].timeIntervalSinceNow
           
           if timeLeft <= 0 {
-               cell.textLabel?.textColor = UIColor.red()
-               cell.detailTextLabel?.textColor = UIColor.red()
+               cell.textLabel?.textColor = UIColor.red
+               cell.detailTextLabel?.textColor = UIColor.red
           } else {
-               cell.textLabel?.textColor = UIColor.black()
-               cell.detailTextLabel?.textColor = UIColor.black()
+               cell.textLabel?.textColor = UIColor.black
+               cell.detailTextLabel?.textColor = UIColor.black
           }
           
           cell.textLabel?.text = event.events[(indexPath as NSIndexPath).row]
@@ -117,7 +119,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
           if editingStyle == .delete {
                // Delete the row from the data source
-               cancelLocalNotification(String(event.date[(indexPath as NSIndexPath).row]))
+               cancelLocalNotification(String(describing: event.date[(indexPath as NSIndexPath).row]))
                event.events.remove(at: (indexPath as NSIndexPath).row)
                event.date.remove(at: (indexPath as NSIndexPath).row)
                event.userDefaults!.set(event.events, forKey: "events")
@@ -134,12 +136,12 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      // MARK: Navigation
      
-     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
           if segue.identifier == "ShowDetail" {
                let selectedCell = sender as? UITableViewCell, selectedRowIndex = (tableView.indexPath(for: selectedCell!)! as NSIndexPath).row
                let eventName = event.events[selectedRowIndex]
                let eventDate = event.date[selectedRowIndex]
-               let detailViewController = segue.destinationViewController as! ViewController
+               let detailViewController = segue.destination as! ViewController
                detailViewController.eventTitle = eventName
                detailViewController.eventDate = eventDate
           }
@@ -150,7 +152,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      }
      
      @IBAction func saveEvent(_ segue:UIStoryboardSegue) {
-          if let addEventViewController = segue.sourceViewController as? AddEventViewController {
+          if let addEventViewController = segue.source as? AddEventViewController {
                if let eventName = addEventViewController.eventTextField.text {
                     event.events.append(eventName)
                     calendarEvent = eventName
@@ -188,7 +190,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
                               dateOffset = (60 * 60)
                               
                          case "1 day":
-                              dateOffset = (60 * 60 * 24)
+                              dateOffset = (TimeInterval(60 * 60 * 24))
                               
                          default:
                               dateOffset = 0
@@ -238,44 +240,50 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      
      func openSettings() {
           let url = URL(string: UIApplicationOpenSettingsURLString)
-          UIApplication.shared().openURL(url!)
+          UIApplication.shared.open(url!, options: [:], completionHandler: nil)
      }
      
      func localNotification(_ eventDate: Date) {
           
-          guard let settings = UIApplication.shared().currentUserNotificationSettings() else { return }
-          if settings.types == UIUserNotificationType() {
-               let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .alert)
-               ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-               present(ac, animated: true, completion: nil)
-               return
+          center.getNotificationSettings { (settings) in
+               if settings.authorizationStatus != .authorized {
+                    let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(ac, animated: true, completion: nil)
+                    return
+               }
           }
           
-          let notification = UILocalNotification()
-          let dict:NSDictionary = ["ID": String(eventDate)]
-          notification.fireDate = eventDate
+          
+          let notification = UNMutableNotificationContent()
+          let dict:NSDictionary = ["ID": String(describing: eventDate)]
+          let triggerDate = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second,], from: eventDate)
+          let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
           notification.userInfo = dict as! [String: AnyObject]
-          notification.alertBody = event.events.last
-          notification.alertAction = "Dismiss"
-          notification.soundName = UILocalNotificationDefaultSoundName
-          UIApplication.shared().scheduleLocalNotification(notification)
+          notification.title = event.events.last!
+          notification.body = "Dismiss"
+          notification.sound = UNNotificationSound.default()
+          let identifier = notification.userInfo["ID"] as! String
+          let request = UNNotificationRequest(identifier: identifier, content: notification, trigger: trigger)
+          center.add(request)
      }
      
      func cancelLocalNotification(_ uniqueID: String) {
-          if let notifyArray = UIApplication.shared().scheduledLocalNotifications {
-               for notification in notifyArray as [UILocalNotification] {
-                    if let info = notification.userInfo as? [String: String] {
+          center.getPendingNotificationRequests(completionHandler: { requests in
+               for request in requests {
+                    if let info = request.content.userInfo as? [String: String] {
                          if info["ID"] == uniqueID {
-                              UIApplication.shared().cancelLocalNotification(notification)
+                              self.center.removePendingNotificationRequests(withIdentifiers: [uniqueID])
                          }
                     }
                }
-          }
+          })
+          
      }
      
      // MARK: WCSessionDelegate
      
-     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
+     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
           if let error = error {
                print("session activation failed with error: \(error.localizedDescription)")
                return

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0800"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,20 +17,6 @@
                BlueprintIdentifier = "2E923EA61CD84CA900544527"
                BuildableName = "Watch.app"
                BlueprintName = "Watch"
-               ReferencedContainer = "container:Countdown.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E923EB21CD84CAA00544527"
-               BuildableName = "Watch Extension.appex"
-               BlueprintName = "Watch Extension"
                ReferencedContainer = "container:Countdown.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

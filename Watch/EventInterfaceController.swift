@@ -24,7 +24,7 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet var noDataLabel: WKInterfaceLabel!
     
     
-    override func awake(withContext context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         if WCSession.isSupported() {
@@ -46,13 +46,13 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
                     
                     let timeLeft = date[index].timeIntervalSinceNow
                     if timeLeft <= 0 {
-                        controller.separator.setColor(UIColor.red())
+                        controller.separator.setColor(UIColor.red)
                     } else {
-                        controller.separator.setColor(UIColor.green())
+                        controller.separator.setColor(UIColor.green)
                     }
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .mediumStyle
-                    dateFormatter.timeStyle = .shortStyle
+                    dateFormatter.dateStyle = .medium
+                    dateFormatter.timeStyle = .short
                     let selectedDate = dateFormatter.string(from: date[index])
                     controller.dateLabel.setText(selectedDate)
                 }
@@ -70,20 +70,19 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     func processApplicationContext() {
-        if let iPhoneContext = session!.receivedApplicationContext as [String: AnyObject]? {
+        let iPhoneContext = session!.receivedApplicationContext as [String: AnyObject]
             if iPhoneContext.isEmpty == false {
                 events = iPhoneContext["events"]! as! [String]
                 date = iPhoneContext["date"]! as! [Date]
                 eventsTable.setNumberOfRows(events.count, withRowType: "EventRow")
             }
-        }
         
         self.loadEvents()
     }
     
     // MARK: WCSessionDelegate
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: NSError?) {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
             print("session activation failed with error: \(error.localizedDescription)")
             return
@@ -93,7 +92,7 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
         processApplicationContext()
     }
     
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+    private func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
         DispatchQueue.main.async {
             self.processApplicationContext()
         }

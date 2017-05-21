@@ -66,8 +66,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
             eventDate = date[arrayIndex]
             eventLabel.text = eventTitle
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .mediumStyle
-            dateFormatter.timeStyle = .shortStyle
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
         }
         
         updateLabels()
@@ -105,7 +105,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
     
-    func widgetPerformUpdate(completionHandler: ((NCUpdateResult) -> Void)) {
+    func widgetPerformUpdate(completionHandler: @escaping ((NCUpdateResult) -> Void)) {
         
         if events.count > 0 {
             loadEvent()
@@ -118,6 +118,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     func widgetMarginInsets
         (forProposedMarginInsets defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
-        return UIEdgeInsetsZero
+        return UIEdgeInsets.zero
     }
 }

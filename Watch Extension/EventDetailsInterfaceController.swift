@@ -25,7 +25,7 @@ class EventDetailsInterfaceController: WKInterfaceController {
     var eventTitle:String!
     var eventDate:Date!
 
-    override func awake(withContext context: AnyObject?) {
+    override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
         if let event = context as? [String: AnyObject]{

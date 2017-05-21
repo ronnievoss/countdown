@@ -12,6 +12,7 @@
 		2E14226F1CEA99F500F4BECF /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E14226E1CEA99F500F4BECF /* TodayViewController.swift */; };
 		2E1422721CEA99F500F4BECF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E1422701CEA99F500F4BECF /* MainInterface.storyboard */; };
 		2E1422761CEA99F500F4BECF /* Countdown Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E1422691CEA99F400F4BECF /* Countdown Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2E512AB21EBFACBC00691002 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E512AB11EBFACBC00691002 /* UserNotificationsUI.framework */; };
 		2E65B9B11D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
 		2E65B9B21D22BA070020AF6B /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0885F21D202E3D000F3366 /* Event.swift */; };
 		2E6C7EB31D23442F004554F1 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2E6C7EB21D23442F004554F1 /* .gitignore */; };
@@ -103,6 +104,7 @@
 		2E1422731CEA99F500F4BECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E14227D1CEAB54900F4BECF /* Countdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Countdown.entitlements; sourceTree = "<group>"; };
 		2E14227E1CEAB58B00F4BECF /* Countdown Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Countdown Widget.entitlements"; sourceTree = "<group>"; };
+		2E512AB11EBFACBC00691002 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		2E6C7EB21D23442F004554F1 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		2E8FA7521CD98BBC00A11650 /* EventRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRowController.swift; sourceTree = "<group>"; };
 		2E8FA7541CD9992800A11650 /* EventDetailsInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsInterfaceController.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E512AB21EBFACBC00691002 /* UserNotificationsUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +159,7 @@
 		2E14226A1CEA99F500F4BECF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E512AB11EBFACBC00691002 /* UserNotificationsUI.framework */,
 				2E14226B1CEA99F500F4BECF /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
@@ -319,7 +323,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Ronnie Voss";
 				TargetAttributes = {
 					2E1422681CEA99F400F4BECF = {
@@ -613,8 +617,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -658,8 +664,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -678,6 +686,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -689,6 +698,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Countdown/Countdown.entitlements;
 				INFOPLIST_FILE = Countdown/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -703,6 +713,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Countdown/Countdown.entitlements;
 				INFOPLIST_FILE = Countdown/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvoss.Countdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
