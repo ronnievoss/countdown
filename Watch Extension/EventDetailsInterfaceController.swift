@@ -37,7 +37,7 @@ class EventDetailsInterfaceController: WKInterfaceController {
         startCounter()
     }
     
-    func updateLabels() {
+    @objc func updateLabels() {
         timeLeft = eventDate.timeIntervalSinceNow
         let day = Int((timeLeft/86400))
         let hour = Int((timeLeft/3600.0).truncatingRemainder(dividingBy: 24))

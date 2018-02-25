@@ -91,7 +91,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         // Check if end date is earlier than start date
         let compareDate = startDate!.compare(endDate!)
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: endDateFormatter.string(from: endDate!))
-        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: 1, range: NSMakeRange(0, attributeString.length))
+        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
         
         startDateLabel.text = dateFormatter.string(from: startDate!)
         if compareDate == .orderedDescending {
@@ -218,7 +218,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         saveButton.isEnabled = !text.isEmpty
     }
     
-    func textFieldDidChange(_ textField: UITextField) {
+    @objc func textFieldDidChange(_ textField: UITextField) {
         checkValidEventName()
     }
     

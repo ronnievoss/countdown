@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13771" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="10032"/>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13756"/>
     </dependencies>
     <scenes>
         <!--Events-->
@@ -16,7 +20,7 @@
                                     <group key="rootItem" width="1" height="40" alignment="left" spacing="5" id="r9a-FV-eMV">
                                         <items>
                                             <separator height="1" heightAdjustment="-5" alignment="left" verticalAlignment="center" id="8PU-IQ-ejl">
-                                                <color key="color" red="0.015686274510000001" green="0.87058823529999996" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="color" red="0.015686274510000001" green="0.87058823529999996" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </separator>
                                             <group alignment="left" verticalAlignment="center" layout="vertical" id="uDd-gx-dVQ">
                                                 <items>
@@ -63,11 +67,11 @@
                                             <items>
                                                 <group width="1" alignment="center" verticalAlignment="center" radius="3" id="pwc-pT-8AZ">
                                                     <items>
-                                                        <label alignment="center" text="00" id="Hzm-41-dGo">
+                                                        <label alignment="center" verticalAlignment="center" text="00" minimumScaleFactor="0.5" id="Hzm-41-dGo">
                                                             <fontDescription key="font" type="system" pointSize="24"/>
                                                         </label>
                                                     </items>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </group>
                                                 <label alignment="center" verticalAlignment="bottom" text="D" id="vvU-UT-LEG">
                                                     <fontDescription key="font" type="system" pointSize="12"/>
@@ -82,7 +86,7 @@
                                                             <fontDescription key="font" type="system" pointSize="24"/>
                                                         </label>
                                                     </items>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </group>
                                                 <label alignment="center" verticalAlignment="bottom" text="H" id="RSp-2p-WmP">
                                                     <fontDescription key="font" type="system" pointSize="12"/>
@@ -97,7 +101,7 @@
                                                             <fontDescription key="font" type="system" pointSize="24"/>
                                                         </label>
                                                     </items>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </group>
                                                 <label alignment="center" verticalAlignment="bottom" text="M" id="Ngx-2G-jLI">
                                                     <fontDescription key="font" type="system" pointSize="12"/>
@@ -112,7 +116,7 @@
                                                             <fontDescription key="font" type="system" pointSize="24"/>
                                                         </label>
                                                     </items>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="0.3333333432674408" green="0.3333333432674408" blue="0.3333333432674408" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </group>
                                                 <label alignment="center" verticalAlignment="bottom" text="S" id="ypG-SC-hpn">
                                                     <fontDescription key="font" type="system" pointSize="12"/>
@@ -149,120 +153,6 @@
             </objects>
             <point key="canvasLocation" x="575" y="413"/>
         </scene>
-        <!--Glance Interface Controller-->
-        <scene sceneID="Mys-wZ-Lwn">
-            <objects>
-                <glanceController id="Nb1-fb-7bz" customClass="GlanceInterfaceController" customModule="Watch_Extension">
-                    <items>
-                        <group alignment="left" layout="vertical" id="Bh5-gq-eep">
-                            <items>
-                                <label alignment="left" text="Countdown" id="TQZ-UQ-T7d">
-                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </label>
-                                <label alignment="left" verticalAlignment="bottom" text="Date" id="ZQl-uO-61z">
-                                    <fontDescription key="font" type="system" pointSize="12"/>
-                                </label>
-                            </items>
-                        </group>
-                        <group alignment="left" id="mjn-Fw-68I">
-                            <items>
-                                <group width="1" alignment="center" verticalAlignment="center" animationDuration="1" layout="vertical" spacing="5" id="dSA-fQ-ThG">
-                                    <items>
-                                        <group width="1" alignment="center" spacing="2" id="KYy-TK-NvP">
-                                            <items>
-                                                <group width="30" alignment="center" layout="vertical" id="f6n-dx-1tz">
-                                                    <items>
-                                                        <group width="1" alignment="center" verticalAlignment="center" radius="3" id="ndl-Xb-NfN">
-                                                            <items>
-                                                                <label alignment="center" text="00" id="u8G-x2-F7O">
-                                                                    <fontDescription key="font" type="system" pointSize="24"/>
-                                                                </label>
-                                                            </items>
-                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </group>
-                                                        <label alignment="center" verticalAlignment="bottom" text="D" id="NT0-sB-xrx">
-                                                            <fontDescription key="font" type="system" pointSize="12"/>
-                                                        </label>
-                                                    </items>
-                                                </group>
-                                                <group width="30" alignment="center" layout="vertical" id="gus-Pt-3gA">
-                                                    <items>
-                                                        <group width="1" alignment="center" verticalAlignment="center" radius="3" id="Zk3-d8-D4x">
-                                                            <items>
-                                                                <label alignment="center" text="00" id="6K1-hw-3IW">
-                                                                    <fontDescription key="font" type="system" pointSize="24"/>
-                                                                </label>
-                                                            </items>
-                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </group>
-                                                        <label alignment="center" verticalAlignment="bottom" text="H" id="s2Q-OM-ZSq">
-                                                            <fontDescription key="font" type="system" pointSize="12"/>
-                                                        </label>
-                                                    </items>
-                                                </group>
-                                                <group width="30" alignment="center" layout="vertical" id="Iwc-5v-cIm">
-                                                    <items>
-                                                        <group width="1" alignment="center" verticalAlignment="center" radius="3" id="soR-dK-pSr">
-                                                            <items>
-                                                                <label alignment="center" text="00" id="BgC-sr-uK3">
-                                                                    <fontDescription key="font" type="system" pointSize="24"/>
-                                                                </label>
-                                                            </items>
-                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </group>
-                                                        <label alignment="center" verticalAlignment="bottom" text="M" id="NO1-Rc-h11">
-                                                            <fontDescription key="font" type="system" pointSize="12"/>
-                                                        </label>
-                                                    </items>
-                                                </group>
-                                                <group width="30" alignment="center" layout="vertical" id="xwP-08-QNo">
-                                                    <items>
-                                                        <group width="1" alignment="center" verticalAlignment="center" radius="3" id="jju-Ur-SqF">
-                                                            <items>
-                                                                <label alignment="center" text="00" id="cPt-MB-EZh">
-                                                                    <fontDescription key="font" type="system" pointSize="24"/>
-                                                                </label>
-                                                            </items>
-                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </group>
-                                                        <label alignment="center" verticalAlignment="bottom" text="S" id="OJZ-ba-z2a">
-                                                            <fontDescription key="font" type="system" pointSize="12"/>
-                                                        </label>
-                                                    </items>
-                                                </group>
-                                            </items>
-                                        </group>
-                                        <group width="1" alignment="left" id="iN6-pK-wA3">
-                                            <items>
-                                                <label alignment="center" text="Until" textAlignment="center" id="9oC-Vg-hPM">
-                                                    <fontDescription key="font" type="system" pointSize="16"/>
-                                                </label>
-                                            </items>
-                                        </group>
-                                        <group width="1" alignment="left" layout="vertical" id="zF5-tW-2Oq">
-                                            <items>
-                                                <label alignment="center" text="Event" textAlignment="center" id="gCl-47-Tes">
-                                                    <fontDescription key="font" type="system" pointSize="20"/>
-                                                </label>
-                                            </items>
-                                        </group>
-                                    </items>
-                                </group>
-                            </items>
-                        </group>
-                    </items>
-                    <connections>
-                        <outlet property="counterDaysLabel" destination="u8G-x2-F7O" id="O69-RA-mul"/>
-                        <outlet property="counterHoursLabel" destination="6K1-hw-3IW" id="ytk-O4-Fj0"/>
-                        <outlet property="counterMinutesLabel" destination="BgC-sr-uK3" id="Zdo-be-JKt"/>
-                        <outlet property="counterSecondsLabel" destination="cPt-MB-EZh" id="IzV-J6-sTu"/>
-                        <outlet property="eventDateLabel" destination="ZQl-uO-61z" id="0DN-Hl-U4Q"/>
-                        <outlet property="eventTitleLabel" destination="gCl-47-Tes" id="kPa-0q-Nog"/>
-                    </connections>
-                </glanceController>
-            </objects>
-            <point key="canvasLocation" x="439" y="716"/>
-        </scene>
     </scenes>
-    <color key="tintColor" red="0.0" green="0.63150919429999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+    <color key="tintColor" red="0.0" green="0.63150919429999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

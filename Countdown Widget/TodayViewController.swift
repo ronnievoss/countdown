@@ -96,7 +96,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         timer = Timer.scheduledTimer(timeInterval: 1, target:self, selector: #selector(TodayViewController.updateCounter), userInfo: nil, repeats: true)
     }
     
-    func updateCounter() {
+    @objc func updateCounter() {
         
         if timeLeft <= 0 {
             timer.invalidate()

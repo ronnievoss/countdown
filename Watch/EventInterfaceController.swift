@@ -28,7 +28,7 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
         super.awake(withContext: context)
         
         if WCSession.isSupported() {
-            session = WCSession.default()
+            session = WCSession.default
             session?.delegate = self
             session?.activate()
         }
@@ -70,7 +70,7 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     func processApplicationContext() {
-        let iPhoneContext = session!.receivedApplicationContext as [String: AnyObject]
+        let iPhoneContext = session!.receivedApplicationContext as [String: Any]
             if iPhoneContext.isEmpty == false {
                 events = iPhoneContext["events"]! as! [String]
                 date = iPhoneContext["date"]! as! [Date]
@@ -92,7 +92,7 @@ class EventInterfaceController: WKInterfaceController, WCSessionDelegate {
         processApplicationContext()
     }
     
-    private func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : AnyObject]) {
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         DispatchQueue.main.async {
             self.processApplicationContext()
         }
