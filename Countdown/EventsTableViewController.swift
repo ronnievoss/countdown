@@ -63,7 +63,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
           if event.events.count > 0 {
                
                self.tableView.backgroundView = nil
-               self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+               self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.singleLine
                
           } else {
                
@@ -73,7 +73,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
                noDataLabel.textColor = UIColor.darkGray
                noDataLabel.textAlignment = NSTextAlignment.center
                self.tableView.backgroundView = noDataLabel
-               self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+               self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
           }
           return 1
      }
@@ -116,7 +116,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
           return true
      }
      
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
           if editingStyle == .delete {
                // Delete the row from the data source
                cancelLocalNotification(String(describing: event.date[(indexPath as NSIndexPath).row]))
@@ -239,8 +239,8 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
      }
      
      func openSettings() {
-          let url = URL(string: UIApplicationOpenSettingsURLString)
-          UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+          let url = URL(string: UIApplication.openSettingsURLString)
+          UIApplication.shared.open(url!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
      }
      
      func localNotification(_ eventDate: Date) {
@@ -262,7 +262,7 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
           notification.userInfo = dict as! [String: AnyObject]
           notification.title = event.events.last!
           notification.body = "Dismiss"
-          notification.sound = UNNotificationSound.default()
+          notification.sound = UNNotificationSound.default
           let identifier = notification.userInfo["ID"] as! String
           let request = UNNotificationRequest(identifier: identifier, content: notification, trigger: trigger)
           center.add(request)
@@ -316,4 +316,9 @@ class EventsTableViewController: UITableViewController, WCSessionDelegate {
 
      
      
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

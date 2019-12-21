@@ -15,7 +15,7 @@ class ReminderViewController: UITableViewController {
     var selectedReminder: String? {
         didSet {
             if let reminder = selectedReminder {
-                selectedReminderIndex = reminders.index(of: reminder)!
+                selectedReminderIndex = reminders.firstIndex(of: reminder)!
             }
         }
     }

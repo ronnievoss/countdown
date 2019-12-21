@@ -91,7 +91,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
         // Check if end date is earlier than start date
         let compareDate = startDate!.compare(endDate!)
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: endDateFormatter.string(from: endDate!))
-        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
+        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSMakeRange(0, attributeString.length))
         
         startDateLabel.text = dateFormatter.string(from: startDate!)
         if compareDate == .orderedDescending {
@@ -103,7 +103,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     }
     
     @IBAction func calendarSwitchValueChanged(_ sender: UISwitch) {
-        UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0.1, options: UIView.AnimationOptions.curveEaseIn, animations: {
             self.eventTextField.resignFirstResponder()
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
@@ -133,7 +133,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: UIView.AnimationOptions.curveEaseIn, animations: {
                 cell.selectedBackgroundView?.alpha = CGFloat(0)
                 },completion: nil)
         }
@@ -210,7 +210,7 @@ class AddEventViewController: UITableViewController, UITextFieldDelegate, UIGest
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         saveButton.isEnabled = false
-        textField.addTarget(self, action: #selector(AddEventViewController.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
+        textField.addTarget(self, action: #selector(AddEventViewController.textFieldDidChange(_:)), for: UIControl.Event.editingChanged)
     }
     
     func checkValidEventName() {
